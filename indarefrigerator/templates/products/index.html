@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Products</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href=""/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h3 class="text-center">Продукты</h3>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Название</th>
+                    <th>Количество</th>
+                    <th>Дата изготовления</th>
+                    <th>Дата просрочки</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <form id="product-create" class="form-inline" role="form" method="POST">
+                    {{ form.csrf_token }}
+                    <tr>
+                        <td>0</td>
+                        <td>
+                            {{ form.name.label(class='sr-only') }}
+                            {{ form.name(autofocus='true', class='form-control input-sm', placeholder='Молоко') }}
+                        </td>
+                        <td>
+                            <span class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                {{ form.amount.label(class='sr-only') }}
+                                {{ form.amount(class='form-control input-sm', placeholder='1')}}
+                            </span>
+                            <span class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                {{ form.amount_type.label(class='sr-only') }}
+                                {{ form.amount_type(class='form-control input-sm', placeholder='шт.') }}
+                            </span>
+                        </td>
+                        <td>
+                            {{ form.start_date.label(class='sr-only') }}
+                            {{ form.start_date(class='datepicker form-control input-sm', placeholder='2014-05-01') }}
+                        </td>
+                        <td>
+                            {{ form.end_date.label(class='sr-only') }}
+                            {{ form.end_date(class='datepicker form-control input-sm', placeholder='2014-06-01') }}
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary input-sm">Ok</button>
+                        </td>
+                    </tr>
+                </form>
+
+                {% for product in products %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ product.name }}
+                        {% with days = product.remaining() %}
+                            ({{ days }} {% if days == 1 %}день{% else %}дней{% endif %})
+                        {% endwith %}
+                    </td>
+                    <td>{{ product.amount }} {{ product.amount_type }}</td>
+                    <td>{{ product.start_date }}</td>
+                    <td>{{ product.end_date }}</td>
+                    <td>
+                        <a class="product-put" data-product-id="{{ product.id }}" href="#">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <a class="product-delete" data-product-id="{{ product.id }}" href="#">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src=""></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}">
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+flask==0.10.1
+flask-admin==1.0.7
+flask-restful=0.2.12
+flask-restless=0.13.0
+flask-sqlalchemy==1.0
+flask-script==0.6.7
+flask-wtf==0.9.5
+
+gunicorn==18.0
