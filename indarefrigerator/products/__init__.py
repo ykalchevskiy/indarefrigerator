@@ -1,4 +1,4 @@
 from .admin import *
-from .api import api
+from .api import *
 from .models import Product
 from .views import product
