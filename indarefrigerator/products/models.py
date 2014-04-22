@@ -20,6 +20,10 @@ class Product(db.Model):
         self.amount_type = amount_type
         self.start_date = start_date
 
+    def life(self):
+        if self.start_date and self.end_date:
+            return (self.end_date - self.start_date).days
+
     def remaining(self):
         return (self.end_date - date.today()).days
 

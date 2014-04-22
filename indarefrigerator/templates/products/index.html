@@ -23,6 +23,7 @@
                     <th>Название</th>
                     <th>Количество</th>
                     <th>Дата изготовления</th>
+                    <th>Время жизни</th>
                     <th>Дата просрочки</th>
                     <th></th>
                 </tr>
@@ -51,6 +52,10 @@
                             {{ form.start_date(class='datepicker form-control input-sm', placeholder='2014-05-01') }}
                         </td>
                         <td>
+                            {{ form.life.label(class='sr-only') }}
+                            {{ form.life(class='form-control input-sm', placeholder='30') }}
+                        </td>
+                        <td>
                             {{ form.end_date.label(class='sr-only') }}
                             {{ form.end_date(class='datepicker form-control input-sm', placeholder='2014-06-01') }}
                         </td>
@@ -70,6 +75,7 @@
                     </td>
                     <td>{{ product.amount }} {{ product.amount_type }}</td>
                     <td>{{ product.start_date }}</td>
+                    <td>{{ product.life() }}</td>
                     <td>{{ product.end_date }}</td>
                     <td>
                         <a class="product-put" data-product-id="{{ product.id }}" href="#">
