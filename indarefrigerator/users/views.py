@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, request
 
-from flask.ext.login import current_user, login_user
+from flask.ext.login import current_user, login_required, login_user, logout_user
 
 from .forms import LoginForm
 
@@ -17,3 +17,10 @@ def login():
         login_user(form.user)
         return redirect('/')
     return render_template('index.html', form=form)
+
+
+@user.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
