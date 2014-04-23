@@ -8,6 +8,8 @@ class BaseConfig(object):
     DEBUG = True
     TESTING = False
 
+    SECRET_KEY = 'adf43rofk-9dqd23dw'
+
     SQLALCHEMY_DATABASE_URI = 'sqlite:///{}/db.sqlite'.format(REPO_DIR)
     SQLALCHEMY_ECHO = False
 

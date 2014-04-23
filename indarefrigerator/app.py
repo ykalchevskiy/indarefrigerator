@@ -1,12 +1,20 @@
 from flask import Flask
 
 from .config import LocalConfig
-from .extensions import admin, api, db
+from .extensions import (
+    admin,
+    api,
+    bcrypt,
+    db,
+    login_manager,
+)
 from .products import product
+from .users import user, User
 
 
 BLUEPRINTS = (
     product,
+    user,
 )
 
 
@@ -31,4 +39,12 @@ def configure_blueprints(app):
 def configure_extensions(app):
     admin.init_app(app)
     api.init_app(app)
+    bcrypt.init_app(app)
     db.init_app(app)
+    login_manager.init_app(app)
+
+    login_manager.login_view = 'user.login'
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(user_id)

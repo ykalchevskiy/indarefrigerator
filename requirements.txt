@@ -1,5 +1,7 @@
 flask==0.10.1
 flask-admin==1.0.7
+flask-bcrypt==0.5.2
+flask-login==0.2.10
 flask-restful=0.2.12
 flask-restless=0.13.0
 flask-sqlalchemy==1.0

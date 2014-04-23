@@ -28,4 +28,4 @@ class Product(db.Model):
         return (self.end_date - date.today()).days
 
     def __repr__(self):
-        return 'Product %r up to %s' % (self.name, self.end_date)
+        return '<Product %r up to %s>' % (self.name, self.end_date)

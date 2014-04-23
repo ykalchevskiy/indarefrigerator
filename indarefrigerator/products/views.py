@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request
 
+from flask.ext.login import login_required
+
 from .forms import ProductForm
 from .models import Product
 from ..extensions import db
@@ -9,6 +11,7 @@ product = Blueprint('product', __name__)
 
 
 @product.route('/', methods=('GET', 'POST'))
+@login_required
 def index():
     model = Product()
     form = ProductForm(request.form)
