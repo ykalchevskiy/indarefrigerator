@@ -27,6 +27,7 @@ class ProductResource(Resource):
 class ProductListResource(Resource):
     def post(self):
         params = strings_to_dates(Product, request.form)
+        params.pop('life', None)
         instance = Product(**params)
         db.session.add(instance)
         db.session.commit()
