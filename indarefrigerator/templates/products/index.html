@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <title>Products</title>
 
@@ -14,17 +14,17 @@
 </head>
 <body>
     <div class="container">
-        <h3 class="text-center">Продукты</h3>
+        <h3 class="text-center">Products</h3>
 
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Название</th>
-                    <th>Количество</th>
-                    <th>Дата изготовления</th>
-                    <th>Время жизни</th>
-                    <th>Дата просрочки</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Release date</th>
+                    <th>Shelf life</th>
+                    <th>Expiration date</th>
                     <th></th>
                 </tr>
             </thead>
@@ -70,7 +70,7 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ product.name }}
                         {% with days = product.remaining() %}
-                            ({{ days }} {% if days == 1 %}день{% else %}дней{% endif %})
+                            ({{ days }} {% if days == 1 %}day{% else %}days{% endif %})
                         {% endwith %}
                     </td>
                     <td>{{ product.amount }} {{ product.amount_type }}</td>
