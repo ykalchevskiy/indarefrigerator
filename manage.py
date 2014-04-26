@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import unittest
+
 from flask.ext.script import Manager, prompt_bool, Shell
 
 from indarefrigerator import create_app
@@ -40,6 +42,15 @@ def create_user(username, password):
     """Creates a new user."""
 
     User.create(username=username, password=password)
+
+
+@manager.command
+def tests():
+    """Runs tests."""
+
+    loader = unittest.TestLoader()
+    test_runner = unittest.TextTestRunner()
+    test_runner.run(loader.discover('tests'))
 
 
 def _make_context():
