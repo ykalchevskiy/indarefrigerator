@@ -8,6 +8,7 @@ from .extensions import (
     bcrypt,
     db,
     login_manager,
+    heroku,
 )
 from .products import product
 from .users import user, User
@@ -51,3 +52,5 @@ def configure_extensions(app):
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(user_id)
+
+    heroku.init_app(app)

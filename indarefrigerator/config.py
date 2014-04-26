@@ -10,17 +10,15 @@ class BaseConfig(object):
 
     SECRET_KEY = os.environ['FLASK_SECRET_KEY']
 
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///{}/db.sqlite'.format(REPO_DIR)
-    SQLALCHEMY_ECHO = False
-
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///{}/db.sqlite'.format(BaseConfig.REPO_DIR)
     SQLALCHEMY_ECHO = True
 
 
 class ProdConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = ''
+    pass
 
 
 class TestConfig(BaseConfig):
