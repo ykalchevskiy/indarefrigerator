@@ -1,6 +1,7 @@
+import os
+
 from flask import Flask
 
-from .config import LocalConfig
 from .extensions import (
     admin,
     api,
@@ -18,17 +19,19 @@ BLUEPRINTS = (
 )
 
 
-def create_app(config=None):
+def create_app(config_object=None):
     app = Flask(__name__)
-    configure_app(app, config)
+    configure_app(app, config_object)
     configure_extensions(app)
     configure_blueprints(app)
     return app
 
 
-def configure_app(app, config=None):
-    app.config.from_object(LocalConfig)
-    app.config.update(config or {})
+def configure_app(app, config_object):
+    if config_object:
+        app.config.from_object(config_object)
+    else:
+        app.config.from_object(os.environ['FLASK_APP_CONFIG'])
 
 
 def configure_blueprints(app):
