@@ -1,12 +1,12 @@
 from datetime import date
 
 from ..extensions import db
+from ..utils import CRUDModel
 
 
-class Product(db.Model):
+class Product(CRUDModel):
     __tablename__ = 'products'
 
-    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     amount = db.Column(db.Integer)
     amount_type = db.Column(db.String(255))
