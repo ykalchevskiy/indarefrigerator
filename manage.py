@@ -6,7 +6,6 @@ from indarefrigerator import create_app
 from indarefrigerator.extensions import db
 from indarefrigerator.products.models import Product
 from indarefrigerator.users.models import User
-from indarefrigerator.users.utils import create_user
 
 
 app = create_app()
@@ -29,10 +28,10 @@ def syncdb():
 
 
 @manager.command
-def new_user(username, password):
+def create_user(username, password):
     """Creates a new user."""
 
-    create_user(username, password)
+    User.create(username=username, password=password)
 
 
 def _make_context():
