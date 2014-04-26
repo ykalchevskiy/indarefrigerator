@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 
-from flask.ext.script import Manager
+from flask.ext.script import Manager, prompt_bool, Shell
 
 from indarefrigerator import create_app
 from indarefrigerator.extensions import db
+from indarefrigerator.products.models import Product
+from indarefrigerator.users.models import User
 from indarefrigerator.users.utils import create_user
 
 
@@ -12,22 +14,32 @@ manager = Manager(app)
 
 
 @manager.command
+def dropdb():
+    """Drops current database."""
+
+    if prompt_bool('Are you sure?'):
+        db.drop_all()
+
+
+@manager.command
 def syncdb():
-    """Init db."""
+    """Syncs current database."""
 
     db.create_all()
 
 
 @manager.command
 def new_user(username, password):
+    """Creates a new user."""
+
     create_user(username, password)
 
 
-@manager.command
-def runserver():
-    """Run dev server."""
+def _make_context():
+    return {'app': app, 'db': db, 'Product': Product, 'User': User}
 
-    app.run()
+
+manager.add_command('shell', Shell('Welcome to the "InDaRefrigerator"!', _make_context))
 
 
 if __name__ == '__main__':
