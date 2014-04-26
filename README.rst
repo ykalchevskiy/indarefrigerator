@@ -25,6 +25,5 @@ flask-restless
 flask-babel
 flask-assets
 flask-wtf
-flask-script
 flask-testing
 backbone

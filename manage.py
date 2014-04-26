@@ -10,21 +10,29 @@ from indarefrigerator.users.models import User
 
 app = create_app()
 manager = Manager(app)
+manager_db = Manager(help='Database manager.')
 
 
-@manager.command
-def dropdb():
-    """Drops current database."""
+@manager_db.command
+def drop():
+    """Drops database."""
 
     if prompt_bool('Are you sure?'):
         db.drop_all()
 
 
-@manager.command
-def syncdb():
-    """Syncs current database."""
+@manager_db.command
+def create():
+    """Syncs database."""
 
     db.create_all()
+
+
+@manager_db.command
+def recreate():
+    """Recreates database."""
+    drop()
+    create()
 
 
 @manager.command
@@ -38,6 +46,7 @@ def _make_context():
     return {'app': app, 'db': db, 'Product': Product, 'User': User}
 
 
+manager.add_command('db', manager_db)
 manager.add_command('shell', Shell('Welcome to the "InDaRefrigerator"!', _make_context))
 
 
