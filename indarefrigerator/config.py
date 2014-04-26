@@ -22,5 +22,7 @@ class ProdConfig(BaseConfig):
 
 
 class TestConfig(BaseConfig):
+    LIVESERVER_PORT = 5005
     TESTING = True
+    SECRET_KEY = 'secret'
     SQLALCHEMY_DATABASE_URI = 'sqlite://'

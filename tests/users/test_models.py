@@ -1,17 +1,9 @@
-from indarefrigerator.extensions import db
 from indarefrigerator.users.models import User
 
-from tests import InDaRefrTestCase
+from tests import InDaTestCase
 
 
-class UserModelTest(InDaRefrTestCase):
-
-    def setUp(self):
-        db.create_all()
-
-    def tearDown(self):
-        db.session.remove()
-        db.drop_all()
+class UserModelTest(InDaTestCase):
 
     def test_create_user(self):
         user_data = {
