@@ -25,10 +25,10 @@ Use virtualenv/activate or virtualenvwrapper/postactivate:
 TODO
 ----
 
-* flask-login + flask-bcrypt
+* flask-login, flask-bcrypt, flask-principal
 * flask-restless
+* flask-wtf
 * flask-babel
 * flask-assets
-* flask-wtf
-* flask-testing
+
 * backbone
