@@ -1,10 +1,17 @@
 #!/usr/bin/env python
+""" Useful project commands.
 
+See list of available commands by './manage.py -h'.
+"""
+
+import sys
 import unittest
 
 from flask.ext.script import Manager, prompt_bool, Shell
 
-from indarefrigerator import create_app
+import flake8.main as flake8
+
+from indarefrigerator.app import create_app
 from indarefrigerator.extensions import db
 from indarefrigerator.products.models import Product
 from indarefrigerator.users.models import User
@@ -33,6 +40,7 @@ def create():
 @manager_db.command
 def recreate():
     """Recreates database."""
+
     drop()
     create()
 
@@ -45,6 +53,14 @@ def create_superuser(email, password):
 
 
 @manager.command
+def lint():
+    """Runs flake8."""
+
+    sys.argv = [None, '.']
+    flake8.main()
+
+
+@manager.command
 def tests():
     """Runs tests."""
 
@@ -54,11 +70,14 @@ def tests():
 
 
 def _make_context():
+    """Returns variables will be available in shell by default."""
+
     return {'app': app, 'db': db, 'Product': Product, 'User': User}
 
 
 manager.add_command('db', manager_db)
-manager.add_command('shell', Shell('Welcome to the "InDaRefrigerator"!', _make_context))
+shell = Shell('Welcome to the "InDaRefrigerator"!', _make_context)
+manager.add_command('shell', shell)
 
 
 if __name__ == '__main__':
