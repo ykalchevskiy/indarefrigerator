@@ -28,6 +28,7 @@ TODO
 * flask-login, flask-bcrypt, flask-principal
 * flask-restless
 * flask-wtf
+* wtforms-alchemy
 * flask-babel
 * flask-assets
 
