@@ -10,7 +10,7 @@ class ProductAdminView(ModelView):
         super(ProductAdminView, self).__init__(model, session, **kwargs)
 
     def is_accessible(self):
-        return current_user.is_authenticated()
+        return current_user.is_authenticated() and current_user.is_superuser()
 
 
 admin.add_view(ProductAdminView(Product, db.session))

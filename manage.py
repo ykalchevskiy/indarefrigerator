@@ -38,10 +38,10 @@ def recreate():
 
 
 @manager.command
-def create_user(username, password):
+def create_superuser(email, password):
     """Creates a new user."""
 
-    User.create(username=username, password=password)
+    User.create(email=email, password=password, is_admin=True)
 
 
 @manager.command
