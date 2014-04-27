@@ -2,4 +2,7 @@
 
 *.py[oc]
 
+.coverage
+htmlcov
+
 db.sqlite

@@ -33,3 +33,10 @@ TODO
 * flask-assets
 
 * backbone
+
+Other
+-----
+
+* nosetests tests --with-coverage --cover-package=indarefrigerator
+* coverage run manage.py tests && coverage report -m
+* coverage html && google-chrome htmlcov/index.html
