@@ -6,8 +6,6 @@ from ..extensions import admin, db
 
 
 class ProductAdminView(ModelView):
-    def __init__(self, model, session, **kwargs):
-        super(ProductAdminView, self).__init__(model, session, **kwargs)
 
     def is_accessible(self):
         return current_user.is_authenticated() and current_user.is_superuser()
