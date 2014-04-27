@@ -1,6 +1,6 @@
 from flask.ext.testing import LiveServerTestCase, TestCase
 
-from indarefrigerator import create_app
+from indarefrigerator.app import create_app
 from indarefrigerator.extensions import db
 
 
