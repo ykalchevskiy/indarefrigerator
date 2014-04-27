@@ -18,7 +18,7 @@ class DevelopmentConfig(BaseConfig):
 
 
 class ProdConfig(BaseConfig):
-    pass
+    SESSION_PROTECTION = 'strong'
 
 
 class TestConfig(BaseConfig):
