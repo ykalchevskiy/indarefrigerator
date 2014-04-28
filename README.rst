@@ -25,7 +25,7 @@ Use virtualenv/activate or virtualenvwrapper/postactivate:
 TODO
 ----
 
-* flask-login, flask-bcrypt, flask-principal
+* flask-security
 * flask-restless
 * flask-wtf
 * wtforms-alchemy
