@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <title>Products</title>
 
@@ -13,19 +13,21 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <form method="POST" class="" role="login">
-            {{ form.csrf_token }}
-            <div class="form-group">
-                {{ form.email.label(class='sr-only') }}
-                {{ form.email(placeholder="Email", class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ form.password.label(class='sr-only') }}
-                {{ form.password(placeholder="Password", class="form-control") }}
-            </div>
-            <button type="submit" class="btn btn-default">Log in</button>
-        </form>
-    </div>
+    {% block body %}
+        <div class="container">
+            <form method="POST" class="" role="login">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    {{ form.email.label(class='sr-only') }}
+                    {{ form.email(placeholder="Email", class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class='sr-only') }}
+                    {{ form.password(placeholder="Password", class="form-control") }}
+                </div>
+                <button type="submit" class="btn btn-default">Log in</button>
+            </form>
+        </div>
+    {% endblock %}
 </body>
 </html>
