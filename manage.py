@@ -9,7 +9,7 @@ import unittest
 
 from flask.ext.script import Manager, prompt_bool, Shell
 
-import flake8.main as flake8
+from flake8 import main as flake8
 
 from indarefrigerator.app import create_app
 from indarefrigerator.extensions import db
