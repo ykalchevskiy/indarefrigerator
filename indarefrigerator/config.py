@@ -17,11 +17,11 @@ class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_ECHO = True
 
 
-class ProdConfig(BaseConfig):
+class ProductionConfig(BaseConfig):
     SESSION_PROTECTION = 'strong'
 
 
-class TestConfig(BaseConfig):
+class TestingConfig(BaseConfig):
     LIVESERVER_PORT = 5005
     TESTING = True
     SECRET_KEY = 'secret'

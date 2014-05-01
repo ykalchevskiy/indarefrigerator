@@ -7,7 +7,7 @@ from indarefrigerator.extensions import db
 class InDaRefrigeratorTestAppMixin(object):
 
     def create_app(self):
-        return create_app('indarefrigerator.config.TestConfig')
+        return create_app('indarefrigerator.config.TestingConfig')
 
     def setUp(self):
         db.create_all()
