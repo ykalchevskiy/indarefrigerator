@@ -1,0 +1,12 @@
+flask==0.10.1
+flask-admin==1.0.7
+flask-bcrypt==0.5.2
+flask-login==0.2.10
+flask-heroku==0.1.8
+flask-restful=0.2.12
+flask-restless=0.13.0
+flask-sqlalchemy==1.0
+flask-script==0.6.7
+flask-wtf==0.9.5
+
+bpython==0.12
