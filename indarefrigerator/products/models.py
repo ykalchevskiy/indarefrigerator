@@ -1,6 +1,7 @@
 from datetime import date
 
 from ..extensions import db
+from ..users.models import User
 from ..utils import CRUDModel
 
 
@@ -12,6 +13,9 @@ class Product(CRUDModel):
     amount_type = db.Column(db.String(255))
     start_date = db.Column(db.Date, default=date.today)
     end_date = db.Column(db.Date, default=date.today, nullable=False)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship(User, backref=db.backref('products', lazy='dynamic'))
 
     def __init__(self, name=None, end_date=None, amount=None, amount_type=None, start_date=None):
         self.name = name

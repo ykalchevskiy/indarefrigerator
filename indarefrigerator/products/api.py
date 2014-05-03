@@ -1,5 +1,6 @@
 from flask import request
 
+from flask.ext.login import current_user
 from flask.ext.restful import Resource
 from flask.ext.restless.helpers import strings_to_dates, to_dict
 
@@ -28,6 +29,7 @@ class ProductListResource(Resource):
     def post(self):
         params = strings_to_dates(Product, request.form)
         params.pop('life', None)
+        params['user'] = current_user
         instance = Product(**params)
         db.session.add(instance)
         db.session.commit()
