@@ -14,7 +14,7 @@ class BaseConfig(object):
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///{}/db.sqlite'.format(BaseConfig.REPO_DIR)
-    SQLALCHEMY_ECHO = True
+    # SQLALCHEMY_ECHO = True
 
 
 class ProductionConfig(BaseConfig):
