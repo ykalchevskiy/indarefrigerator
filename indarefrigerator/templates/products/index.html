@@ -8,7 +8,6 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Name</th>
                     <th>Amount</th>
                     <th>Release date</th>
@@ -18,10 +17,9 @@
                 </tr>
             </thead>
             <tbody>
-                <form id="product-create" class="form-inline" role="form" method="POST">
+                <form class="form-inline" role="form" method="POST">
                     {{ form.csrf_token }}
                     <tr>
-                        <td>0</td>
                         <td>
                             {{ form.name.label(class='sr-only') }}
                             {{ form.name(autofocus='true', class='form-control input-sm', placeholder='Молоко') }}
@@ -55,26 +53,25 @@
                 </form>
 
                 {% for product in products %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ product.name }}
-                        {% with days = product.remaining() %}
-                            ({{ days }} {% if days == 1 %}day{% else %}days{% endif %})
-                        {% endwith %}
-                    </td>
-                    <td>{{ product.amount }} {{ product.amount_type }}</td>
-                    <td>{{ product.start_date }}</td>
-                    <td>{{ product.life() }}</td>
-                    <td>{{ product.end_date }}</td>
-                    <td>
-                        <a class="product-put" data-product-id="{{ product.id }}" href="#">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                        <a class="product-delete" data-product-id="{{ product.id }}" href="#">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ product.name }}
+                            {% with days = product.remaining() %}
+                                ({{ days }} {% if days == 1 %}day{% else %}days{% endif %} left)
+                            {% endwith %}
+                        </td>
+                        <td>{{ product.amount }} {{ product.amount_type }}</td>
+                        <td>{{ product.start_date }}</td>
+                        <td>{{ product.life() }}</td>
+                        <td>{{ product.end_date }}</td>
+                        <td>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <a href="{{ url_for('product.delete', product_id=product.id) }}">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

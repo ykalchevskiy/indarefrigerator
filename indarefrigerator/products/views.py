@@ -1,10 +1,9 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 
-from flask.ext.login import login_required
+from flask.ext.login import current_user, login_required
 
 from .forms import ProductForm
 from .models import Product
-from ..extensions import db
 
 
 product = Blueprint('product', __name__)
@@ -15,10 +14,22 @@ product = Blueprint('product', __name__)
 def index():
     model = Product()
     form = ProductForm(request.form)
-    if request.method == 'POST' and form.validate():
+    if form.validate_on_submit():
         form.populate_obj(model)
-        db.session.add(model)
-        db.session.commit()
-        return 'ok'
+        model.save()
+        flash('%r created!' % model)
+        return redirect(url_for('product.index'))
+    elif form.is_submitted():
+        flash(form.errors)
     products = Product.query.order_by(Product.end_date).all()
     return render_template('products/index.html', form=form, products=products)
+
+
+@product.route('/delete/<int:product_id>')
+@login_required
+def delete(product_id):
+    model = Product.get_or_404(product_id)
+    if current_user == model.user:
+        flash('%r deleted!' % model)
+        model.delete()
+    return redirect(url_for('product.index'))

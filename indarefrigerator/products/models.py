@@ -17,16 +17,10 @@ class Product(CRUDModel):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship(User, backref=db.backref('products', lazy='dynamic'))
 
-    def __init__(self, name=None, end_date=None, amount=None, amount_type=None, start_date=None):
-        self.name = name
-        self.end_date = end_date
-        self.amount = amount
-        self.amount_type = amount_type
-        self.start_date = start_date
-
     def life(self):
         if self.start_date and self.end_date:
             return (self.end_date - self.start_date).days
+        return 'Unknown'
 
     def remaining(self):
         return (self.end_date - date.today()).days
