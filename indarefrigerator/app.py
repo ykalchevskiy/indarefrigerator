@@ -23,8 +23,9 @@ BLUEPRINTS = (
 def create_app(config_object=None):
     app = Flask(__name__)
     configure_app(app, config_object)
-    configure_extensions(app)
     configure_blueprints(app)
+    configure_extensions(app)
+    configure_jinja(app)
     return app
 
 
@@ -55,3 +56,8 @@ def configure_extensions(app):
         return User.query.get(user_id)
 
     heroku.init_app(app)
+
+
+def configure_jinja(app):
+    app.jinja_env.lstrip_blocks = True
+    app.jinja_env.trim_blocks = True

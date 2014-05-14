@@ -53,10 +53,11 @@
 
             {% for product in products %}
                 <tr>
-                    <td>{{ product.name }}
+                    <td>
+                        {{- product.name -}}
                         {% with days = product.remaining() %}
                             ({{ days }} {% if days == 1 %}day{% else %}days{% endif %} left)
-                        {% endwith %}
+                        {% endwith -%}
                     </td>
                     <td>{{ product.amount }} {{ product.amount_type }}</td>
                     <td>{{ product.start_date }}</td>
