@@ -17,10 +17,10 @@ def index():
     if form.validate_on_submit():
         form.populate_obj(model)
         model.save()
-        flash('%r created!' % model)
+        flash('%r created!' % model.name, 'success')
         return redirect(url_for('product.index'))
     elif form.is_submitted():
-        flash(form.errors)
+        flash(form.errors, 'danger')
     products = Product.query.order_by(Product.end_date).all()
     return render_template('products/index.html', form=form, products=products)
 
@@ -30,6 +30,6 @@ def index():
 def delete(product_id):
     model = Product.get_or_404(product_id)
     if current_user == model.user:
-        flash('%r deleted!' % model)
+        flash('%r deleted!' % model.name, 'success')
         model.delete()
     return redirect(url_for('product.index'))
