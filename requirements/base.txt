@@ -3,8 +3,8 @@ flask-admin==1.0.7
 flask-bcrypt==0.5.2
 flask-login==0.2.10
 flask-heroku==0.1.8
-flask-restful=0.2.12
-flask-restless=0.13.0
+#flask-restless=0.13.0
+-e git://github.com/ykalchevskiy/flask-restless.git@remove_app_dependency#egg=flask-restless
 flask-sqlalchemy==1.0
 flask-script==0.6.7
 flask-wtf==0.9.5

@@ -43,7 +43,7 @@ def configure_blueprints(app):
 
 def configure_extensions(app):
     admin.init_app(app)
-    api.init_app(app)
+    api.init_app(app, db.session)
     bcrypt.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)

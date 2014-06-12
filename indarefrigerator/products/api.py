@@ -1,40 +1,45 @@
-from flask import request
-
 from flask.ext.login import current_user
-from flask.ext.restful import Resource
-from flask.ext.restless.helpers import strings_to_dates, to_dict
+from flask.ext.restless import ProcessingException
 
 from .models import Product
-from ..extensions import api, db
+from ..extensions import api
 
 
-class ProductResource(Resource):
-
-    def delete(self, product_id):
-        instance = Product.query.get(product_id)
-        db.session.delete(instance)
-        db.session.commit()
-        return {}
-
-    def put(self, product_id):
-        instance = Product.query.get(product_id)
-        params = strings_to_dates(Product, request.form)
-        for field, value in params.items():
-            setattr(instance, field, value)
-        db.session.commit()
-        return to_dict(instance)
+def auth_preprocessor(*args, **kwargs):
+    if not current_user.is_authenticated():
+        raise ProcessingException(description='Not authenticated!', code=401)
 
 
-class ProductListResource(Resource):
-    def post(self):
-        params = strings_to_dates(Product, request.form)
-        params.pop('life', None)
-        params['user'] = current_user
-        instance = Product(**params)
-        db.session.add(instance)
-        db.session.commit()
-        return to_dict(instance)
+def check_instance_user_preprocessor(instance_id=None, **kwargs):
+    if not Product.get_or_404(instance_id).user == current_user:
+        raise ProcessingException(description='Forbidden!', code=403)
 
 
-api.add_resource(ProductResource, '/api/products/<int:product_id>')
-api.add_resource(ProductListResource, '/api/products')
+def get_many_preprocessor(search_params=None, **kwargs):
+    auth_filter = {'name': 'user', 'op': '==', 'val': current_user}
+    search_params = search_params or {}
+    search_params.setdefault('filters', []).append(auth_filter)
+
+
+def post_preprocessor(data=None, **kwargs):
+    data = data or {}
+    data['user'] = current_user
+
+
+def put_single_preprocessor(instance_id=None, data=None, **kwargs):
+    data.pop('life', None)
+    data.pop('remaining', None)
+    return
+
+
+api = api.create_api(Product,
+                     include_methods=['life', 'remaining'],
+                     methods=['GET', 'POST', 'PUT', 'DELETE'],
+                     results_per_page=100,
+                     preprocessors={
+                         'GET_MANY': [auth_preprocessor, get_many_preprocessor],
+                         'GET_SINGLE': [auth_preprocessor, check_instance_user_preprocessor],
+                         'POST': [auth_preprocessor, post_preprocessor],
+                         'PUT_SINGLE': [auth_preprocessor, check_instance_user_preprocessor, put_single_preprocessor],
+                         'DELETE': [auth_preprocessor, check_instance_user_preprocessor]
+                     })

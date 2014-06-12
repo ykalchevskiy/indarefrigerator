@@ -33,3 +33,8 @@ def delete(product_id):
         flash('%r deleted!' % model.name, 'success')
         model.delete()
     return redirect(url_for('product.index'))
+
+
+@product.route('/ng')
+def ng():
+    return render_template('products/ng.html')

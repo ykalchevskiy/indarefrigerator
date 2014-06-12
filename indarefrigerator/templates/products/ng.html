@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="refrigerator">
+<head>
+    <title>Products</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <style>
+        .ng-invalid.ng-dirty {
+            border-color: red;
+        }
+        .ng-valid.ng-dirty {
+            border-color: green;
+        }
+    </style>
+</head>
+<body>
+    {% raw -%}
+    <div class="container" ng-controller="RefrigeratorController as refrigerator">
+        <h3 class="text-center">
+            Products ({{ refrigerator.products.length }}) <span class="pull-right">{{ refrigerator.getDate() }}</span>
+        </h3>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="width: 20%;">Amount</th>
+                    <th>Release date</th>
+                    <!--<th>Shelf life</th>-->
+                    <th>Expiration date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <form name="productForm" class="form-inline" role="form" ng-submit="refrigerator.createProduct()">
+                    <tr style="background-color: rgba(233, 233, 236, 0.98)">
+                        <td>
+                            <label class="sr-only" for="name">Name</label>
+                            <input ng-model="refrigerator.product.name" autofocus="true" class="form-control input-sm" placeholder="Milk" type="text" required>
+                        </td>
+                        <td>
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label class="sr-only" for="amount">Amount</label>
+                                <input ng-model="refrigerator.product.amount" class="form-control input-sm" placeholder="1" type="number">
+                            </div>
+                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                <label class="sr-only" for="amount_type">Amount Type</label>
+                                <input ng-model="refrigerator.product.amount_type" class="form-control input-sm" placeholder="bottle" type="text">
+                            </div>
+                        </td>
+                        <td>
+                            <label class="sr-only" for="start_date">Start Date</label>
+                            <input ng-model="refrigerator.product.start_date" class="form-control input-sm datepicker" placeholder="2014-05-01" type="text">
+                        </td>
+                        <!--<td>
+                            <label class="sr-only" for="life">Life</label>
+                            <input class="form-control input-sm" id="life" name="life" placeholder="30" type="text">
+                        </td>-->
+                        <td>
+                            <label class="sr-only" for="end_date">End Date</label>
+                            <input ng-model="refrigerator.product.end_date" class="form-control input-sm datepicker" placeholder="2014-06-01" type="text" required>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary input-sm">Ok</button>
+                        </td>
+                    </tr>
+                </form>
+
+
+                <tr ng-repeat="product in refrigerator.products | orderBy:'end_date'">
+                    <td>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="padding-left: 0">
+                            <label class="sr-only" for="name">Name</label>
+                            <input ng-model="product.name" class="form-control input-sm" type="text" required/>
+                        </div>
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            ({{ product.remaining }} day(s) left)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            <label class="sr-only" for="amount">Amount</label>
+                            <input ng-model="product.amount" class="form-control input-sm" type="number">
+                        </div>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                            <label class="sr-only" for="amount_type">Amount Type</label>
+                            <input ng-model="product.amount_type" class="form-control input-sm" type="text">
+                        </div>
+                    </td>
+                    <td>
+                        <label class="sr-only" for="start_date">Start Date</label>
+                        <input ng-model="product.start_date" class="datepicker form-control input-sm" type="text">
+                    </td>
+                    <!--<td>
+                        {{ product.life }}
+                    </td>-->
+                    <td>
+                        <label class="sr-only" for="end_date">End Date</label>
+                        <input ng-model="product.end_date" class="datepicker form-control input-sm" type="text">
+                    </td>
+                    <td>
+                        <a ng-click="refrigerator.updateProduct(product)">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        <a ng-click="refrigerator.deleteProduct(product)">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endraw -%}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='libs/angular.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
