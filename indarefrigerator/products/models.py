@@ -17,6 +17,8 @@ class Product(CRUDModel):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship(User, backref=db.backref('products', lazy='dynamic'))
 
+    METHODS = ['life', 'remaining']
+
     def life(self):
         if self.start_date and self.end_date:
             return (self.end_date - self.start_date).days

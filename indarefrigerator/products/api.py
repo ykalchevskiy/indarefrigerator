@@ -25,12 +25,12 @@ def post_preprocessor(data=None, **kwargs):
 
 
 def put_single_preprocessor(data=None, **kwargs):
-    data.pop('life', None)
-    data.pop('remaining', None)
+    for method in Product.METHODS:
+        data.pop(method, None)
 
 
 api = api.create_api(Product,
-                     include_methods=['life', 'remaining'],
+                     include_methods=Product.METHODS,
                      methods=['GET', 'POST', 'PUT', 'DELETE'],
                      results_per_page=100,
                      preprocessors={
