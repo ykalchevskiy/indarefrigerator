@@ -17,19 +17,16 @@ def check_instance_user_preprocessor(instance_id=None, **kwargs):
 
 def get_many_preprocessor(search_params=None, **kwargs):
     auth_filter = {'name': 'user', 'op': '==', 'val': current_user}
-    search_params = search_params or {}
     search_params.setdefault('filters', []).append(auth_filter)
 
 
 def post_preprocessor(data=None, **kwargs):
-    data = data or {}
     data['user'] = current_user
 
 
-def put_single_preprocessor(instance_id=None, data=None, **kwargs):
+def put_single_preprocessor(data=None, **kwargs):
     data.pop('life', None)
     data.pop('remaining', None)
-    return
 
 
 api = api.create_api(Product,
