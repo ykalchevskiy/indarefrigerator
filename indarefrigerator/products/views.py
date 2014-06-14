@@ -9,7 +9,7 @@ from .models import Product
 product = Blueprint('product', __name__)
 
 
-@product.route('/', methods=('GET', 'POST'))
+@product.route('/old', methods=('GET', 'POST'))
 @login_required
 def index():
     model = Product()
@@ -21,11 +21,11 @@ def index():
         return redirect(url_for('product.index'))
     elif form.is_submitted():
         flash(form.errors, 'danger')
-    products = Product.query.order_by(Product.end_date).all()
+    products = Product.query.filter(Product.user == current_user).order_by(Product.end_date).all()
     return render_template('products/index.html', form=form, products=products)
 
 
-@product.route('/delete/<int:product_id>')
+@product.route('/old/delete/<int:product_id>')
 @login_required
 def delete(product_id):
     model = Product.get_or_404(product_id)
@@ -35,6 +35,7 @@ def delete(product_id):
     return redirect(url_for('product.index'))
 
 
-@product.route('/ng')
+@product.route('/')
+@login_required
 def ng():
     return render_template('products/ng.html')
