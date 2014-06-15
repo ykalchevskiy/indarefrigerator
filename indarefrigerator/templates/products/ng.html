@@ -24,7 +24,7 @@
     {% raw -%}
     <div class="container" ng-controller="RefrigeratorController as refrigerator">
         <h3 class="text-center">
-            Products ({{ refrigerator.products.length }}) <span class="pull-right">{{ refrigerator.getDate() }}</span>
+            Products ({{ refrigerator.products.length }}) <span class="pull-right">Today: {{ refrigerator.getDate() }}</span>
         </h3>
 
         <table class="table table-bordered table-striped">
@@ -82,7 +82,7 @@
                             <input ng-model="product.name" class="form-control input-sm" type="text" required/>
                         </div>
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                            ({{ product.remaining }} day(s) left)
+                            ({{ refrigerator.getRemaining(product) }} day(s) left)
                         </div>
                     </td>
                     <td>

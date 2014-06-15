@@ -44,6 +44,17 @@
                 });
         };
 
+        refrigerator.getRemaining = function(product) {
+            var now = new Date,
+                todayMilliseconds = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()),
+                endDateMilliseconds = Date.parse(product.end_date),
+                dayMilliseconds = 1000 * 60 * 60 * 24;
+            if (!endDateMilliseconds) {
+                return '?';
+            }
+            return (endDateMilliseconds - todayMilliseconds) / dayMilliseconds;
+        };
+
         // helpers
 
         refrigerator.getDate = function() {
