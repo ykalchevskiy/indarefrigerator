@@ -12,12 +12,54 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <style>
-        .ng-invalid.ng-dirty {
-            border-color: red;
+        .div-table{
+          display:table;
+          width:100%;
+          border:1px solid  lightgray;
+            border-collapse: collapse;
+          border-spacing:5px;/*cellspacing:poor IE support for  this*/
         }
-        .ng-valid.ng-dirty {
-            border-color: green;
+        .div-table-row{
+          display:table-row;
+          width:auto;
+          clear:both;
         }
+        .div-table-col{
+          float:left;/*fix for  buggy browsers*/
+          display:table-column;
+          width:20%;
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border: 1px solid #ddd;
+        }
+        .div-table-head .div-table-col {
+            font-weight: bold;
+        }
+        .div-table-row:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+        .s-name {
+            width: 30%;
+        }
+        .s-amount {
+            width: 20%;
+        }
+        .s-release-date {
+            width: 20%;
+        }
+        .s-expiration-date {
+            width: 20%;
+        }
+        .s-actions {
+            width: 10%;
+        }
+{#        .ng-invalid.ng-dirty {#}
+{#            border-color: red;#}
+{#        }#}
+{#        .ng-valid.ng-dirty {#}
+{#            border-color: green;#}
+{#        }#}
     </style>
 </head>
 <body>
@@ -27,65 +69,58 @@
             Products ({{ refrigerator.products.length }}) <span class="pull-right">Today: {{ refrigerator.getDate() }}</span>
         </h3>
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th style="width: 20%;">Amount</th>
-                    <th>Release date</th>
-                    <!--<th>Shelf life</th>-->
-                    <th>Expiration date</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="div-table">
 
-                <form name="productForm" class="form-inline" role="form" ng-submit="refrigerator.createProduct()">
-                    <tr style="background-color: rgba(233, 233, 236, 0.98)">
-                        <td>
-                            <label class="sr-only" for="name">Name</label>
-                            <input ng-model="refrigerator.product.name" autofocus="true" class="form-control input-sm" placeholder="Milk" type="text" required>
-                        </td>
-                        <td>
-                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                                <label class="sr-only" for="amount">Amount</label>
-                                <input ng-model="refrigerator.product.amount" class="form-control input-sm" placeholder="1" type="number" min="0">
-                            </div>
-                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                                <label class="sr-only" for="amount_type">Amount Type</label>
-                                <input ng-model="refrigerator.product.amount_type" class="form-control input-sm" placeholder="bottle" type="text">
-                            </div>
-                        </td>
-                        <td>
-                            <label class="sr-only" for="start_date">Start Date</label>
-                            <input ng-model="refrigerator.product.start_date" class="form-control input-sm datepicker" placeholder="2014-05-01" type="text">
-                        </td>
-                        <!--<td>
-                            <label class="sr-only" for="life">Life</label>
-                            <input class="form-control input-sm" id="life" name="life" placeholder="30" type="text">
-                        </td>-->
-                        <td>
-                            <label class="sr-only" for="end_date">End Date</label>
-                            <input ng-model="refrigerator.product.end_date" class="form-control input-sm datepicker" placeholder="2014-06-01" type="text" required>
-                        </td>
-                        <td>
-                            <button type="submit" class="btn btn-primary input-sm">Ok</button>
-                        </td>
-                    </tr>
+            <div class="div-table-row div-table-head">
+                <div class="div-table-col s-name">Name</div>
+                <div class="div-table-col s-amount">Amount</div>
+                <div class="div-table-col s-release-date">Release date</div>
+                <div class="div-table-col s-expiration-date">Expiration date</div>
+                <div class="div-table-col s-actions">&nbsp;</div>
+            </div>
+
+            <div class="div-table-row" style="background-color: rgba(233, 233, 236, 0.98)">
+                <form name="productForm" role="form" ng-submit="productForm.$valid && refrigerator.createProduct()" novalidate>
+                    <div class="div-table-col s-name">
+                        <label class="sr-only" for="name">Name</label>
+                        <input ng-model="refrigerator.product.name" autofocus="true" name="name" class="form-control input-sm" placeholder="Milk" type="text" required>
+                    </div>
+                    <div class="div-table-col s-amount">
+                        <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                            <label class="sr-only" for="amount">Amount</label>
+                            <input ng-model="refrigerator.product.amount" class="form-control input-sm" placeholder="1" type="number" min="0">
+                        </div>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                            <label class="sr-only" for="amount_type">Amount Type</label>
+                            <input ng-model="refrigerator.product.amount_type" class="form-control input-sm" placeholder="bottle" type="text">
+                        </div>
+                    </div>
+                    <div class="div-table-col s-release-date">
+                        <label class="sr-only" for="start_date">Start Date</label>
+                        <input ng-model="refrigerator.product.start_date" class="form-control input-sm datepicker" placeholder="2014-05-01" type="text">
+                    </div>
+                    <div class="div-table-col s-expiration-date">
+                        <label class="sr-only" for="end_date">End Date</label>
+                        <input ng-model="refrigerator.product.end_date" class="form-control input-sm datepicker" placeholder="2014-06-01" type="text" required>
+                    </div>
+                    <div class="div-table-col s-actions">
+                        <button type="submit" title="Create" class="btn btn-primary input-sm" ng-disabled="productForm.$invalid">Ok</button>
+                    </div>
                 </form>
+            </div>
 
-
-                <tr ng-repeat="product in refrigerator.products | orderBy:'end_date'">
-                    <td>
+            <div class="div-table-row" ng-repeat="product in refrigerator.products | orderBy:'end_date'">
+                <ng-form name="productUpdateForm" role="form" ng-submit="refrigerator.updateProduct(product)" novalidate>
+                    <div class="div-table-col s-name">
                         <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="padding-left: 0">
                             <label class="sr-only" for="name">Name</label>
                             <input ng-model="product.name" class="form-control input-sm" type="text" required/>
                         </div>
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                            ({{ refrigerator.getRemaining(product) }} day(s) left)
+                            {{ refrigerator.getRemaining(product) }}
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div class="div-table-col s-amount">
                         <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                             <label class="sr-only" for="amount">Amount</label>
                             <input ng-model="product.amount" class="form-control input-sm" type="number" min="0">
@@ -94,29 +129,28 @@
                             <label class="sr-only" for="amount_type">Amount Type</label>
                             <input ng-model="product.amount_type" class="form-control input-sm" type="text">
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div class="div-table-col s-release-date">
                         <label class="sr-only" for="start_date">Start Date</label>
-                        <input ng-model="product.start_date" class="datepicker form-control input-sm" type="text">
-                    </td>
-                    <!--<td>
-                        {{ product.life }}
-                    </td>-->
-                    <td>
+                        <input ng-model="product.start_date" class="form-control input-sm datepicker" type="text">
+                    </div>
+                    <div class="div-table-col s-expiration-date">
                         <label class="sr-only" for="end_date">End Date</label>
-                        <input ng-model="product.end_date" class="datepicker form-control input-sm" type="text">
-                    </td>
-                    <td>
-                        <a ng-click="refrigerator.updateProduct(product)">
+                        <input ng-model="product.end_date" class="form-control input-sm datepicker" type="text" required>
+                    </div>
+                    <div class="div-table-col s-actions">
+                        <button type="submit" title="Update" class="btn btn-info input-sm" ng-click="refrigerator.updateProduct(product)" ng-disabled="productUpdateForm.$invalid">
                             <span class="glyphicon glyphicon-edit"></span>
-                        </a>
-                        <a ng-click="refrigerator.deleteProduct(product)">
+                        </button>
+                        <button title="Delete" class="btn btn-danger input-sm" ng-click="refrigerator.deleteProduct(product)">
                             <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        </button>
+                    </div>
+                </ng-form>
+            </div>
+
+        </div>
+
     </div>
     {% endraw -%}
 

@@ -45,14 +45,27 @@
         };
 
         refrigerator.getRemaining = function(product) {
-            var now = new Date,
+            var days,
+                now = new Date,
                 todayMilliseconds = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()),
                 endDateMilliseconds = Date.parse(product.end_date),
                 dayMilliseconds = 1000 * 60 * 60 * 24;
             if (!endDateMilliseconds) {
                 return '?';
             }
-            return (endDateMilliseconds - todayMilliseconds) / dayMilliseconds;
+            days = parseInt((endDateMilliseconds - todayMilliseconds) / dayMilliseconds);
+            if (days === 1) {
+                return '(1 day left)';
+            }
+            else if (days >= 1) {
+                return '(' + days +' days left)';
+            }
+            else if (days === 0) {
+                return '(the last day)';
+            }
+            else {
+                return '(outdated!!!)';
+            }
         };
 
         // helpers
