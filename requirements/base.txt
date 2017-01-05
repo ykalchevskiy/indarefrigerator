@@ -7,6 +7,7 @@ flask-heroku==0.1.8
 -e git://github.com/ykalchevskiy/flask-restless.git@remove_app_dependency#egg=flask-restless
 flask-sqlalchemy==1.0
 flask-script==0.6.7
+WTForms<2
 flask-wtf==0.9.5
 
 bpython==0.12
