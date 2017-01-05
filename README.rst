@@ -21,6 +21,14 @@ Use virtualenv/activate or virtualenvwrapper/postactivate:
     $ export FLASK_APP_CONFIG=indarefrigerator.config.DevelopmentConfig
     $ export FLASK_SECRET_KEY=secret
 
+Quickstart
+----------
+
+.. code-block:: bash
+
+    $ ./manage.py db create
+    $ ./manage.py create_superuser user@example.com password
+    $ ./manage.py runserver
 
 TODO
 ----
