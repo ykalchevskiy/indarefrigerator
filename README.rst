@@ -26,6 +26,7 @@ Quickstart
 
 .. code-block:: bash
 
+    $ pip install -r requrements/testing.txt
     $ ./manage.py db create
     $ ./manage.py create_superuser user@example.com password
     $ ./manage.py runserver
